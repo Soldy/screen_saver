@@ -1,26 +1,23 @@
 class ScreenClass{
   public:
     void init(){
-        cache.result.x=1920;
-        cache.result.y=1080;
-        cache.screen_size.x=1920;
-        cache.screen_size.y=1080;
+        cache.result.x=cppConfig::getInt("result_x");
+        cache.result.y=cppConfig::getInt("result_y");
+        cache.screen_size.x=cppConfig::getInt("result_x");
+        cache.screen_size.y=cppConfig::getInt("result_y");
         result.change();
         this->checkSize();
         this->createWindow();
         this->createRender();
     };
     void rendering(){
-        this->setBlack();
-        if(this->update_round > this->update_rate){
-            this->update_round = 0;
-            SDL_RenderClear(cache.render);
-        }else{
-            players.one->clear();
-            players.two->clear();
-        }
+//        this->setBlack();
+//        if(this->update_round > this->update_rate){
+//            this->update_round = 0;
+//            SDL_RenderClear(cache.render);
+//        }
         SDL_RenderPresent(cache.render);
-        this->update_round++;
+//       this->update_round++;
     };
     void close(){
         SDL_DestroyWindow( cache.window );
@@ -36,7 +33,7 @@ class ScreenClass{
     };
     void createWindow(){
         cache.window = SDL_CreateWindow(
-           "pong",
+           "screen saver",
            cache.result.x,
            cache.result.y,
            cache.result.x,
@@ -56,7 +53,7 @@ class ScreenClass{
             -1,
             SDL_RENDERER_ACCELERATED
         );
-        this->setBlack();
+//        this->setBlack();
         SDL_RenderClear(cache.render);
     };
     void setBlack(){

@@ -1,0 +1,103 @@
+
+#include <iostream>
+#include <fstream>
+class ImagesClass{
+  private:
+    std::vector<std::string> list = simple_list::read("files.lst");
+    std::vector<std::string> imgs;
+    std::vector<SDL_Texture *> textures;
+    std::vector<SDL_Surface *> surfaces;
+    SDL_Rect rect;
+    Dimension d;
+    SDL_Texture *readOne(
+      std::string file_name
+    ){
+        std::streampos size;
+        char * buffer;
+        std::ifstream file (
+          file_name,
+          std::ios::in|std::ios::binary|std::ios::ate
+        );
+        if(!file.is_open())
+        throw std::runtime_error(
+            std::string(
+              "File not opened : "+
+              file_name
+            )
+         );
+        buffer = new char [file.tellg()];
+        file.seekg (0, std::ios::beg);
+        file.read (buffer, size);
+        file.close();
+        std::string out(buffer);
+        SDL_RWops *rw;
+        SDL_Texture *image;
+        rw = SDL_RWFromConstMem(out.c_str(), out.size());
+        image = IMG_LoadTexture_RW(cache.render, rw, 1);
+        SDL_QueryTexture(image, NULL, NULL, &this->rect.w, &this->rect.h);
+        return image;
+    };
+    void init(){
+        IMG_Init(IMG_INIT_PNG);
+        int index = 0;
+        for(std::string &v : this->list){
+            this->surfaces.push_back(IMG_Load(v.c_str()));
+            index = this->surfaces.size()-1;
+            if (this->surfaces[index] == NULL) 
+	             std::cout << "Error creating surfce " << v<< std::endl;
+        }
+        for(auto &v : this->surfaces){
+            this->textures.push_back(
+                SDL_CreateTextureFromSurface(
+                    cache.render, 
+                    v
+                )
+            );
+            index = this->textures.size()-1;
+            if (this->textures[index] == NULL) 
+	             std::cout << 
+                   "Error creating texture " << 
+                   this->list[index] << 
+                   " - " << 
+                   SDL_GetError() <<
+                   std::endl;
+            SDL_FreeSurface(v);
+        }
+//        for(auto &v : this->textures){
+//            SDL_FreeSurface(v);
+//        }
+    };
+     void resize(){
+         this->rect.x = result.x(this->d.position.x);
+         this->rect.w = result.x(this->d.size.x);
+         this->rect.y = result.y(this->d.position.y);
+         this->rect.h = result.y(this->d.size.y);
+     };
+  public:
+    ImagesClass(){
+         this->d.position.x =0;
+         this->d.position.y =0;
+         this->d.size.x = 1920;
+         this->d.size.y = 1080;
+         this->init();
+    };
+    void render(){
+        SDL_RenderClear(cache.render);
+        SDL_RenderCopy(cache.render, this->textures[0], NULL, NULL);
+        SDL_RenderPresent(cache.render);
+        /*
+        this->resize();
+        SDL_RenderDrawRect(
+            cache.render,
+            & this->rect
+        );
+        SDL_RenderCopy(
+            cache.render,
+            this->textures[0], 
+            nullptr,
+            &this->rect
+        );
+        */
+    };
+};
+
