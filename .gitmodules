@@ -1,12 +1,12 @@
-[submodule "subs/ini"]
-	path = subs/ini
-	url = git@github.com:Soldy/cpp_simple_ini.git
-[submodule "subs/config"]
-	path = subs/config
-	url = git@github.com:Soldy/cpp_config.git
-[submodule "subs/list"]
-	path = subs/list
-	url = https://github.com/Soldy/cpp_list.git
 [submodule "subs/trim"]
 	path = subs/trim
 	url = https://github.com/Soldy/cpp_just_trim.git
+[submodule "subs/list"]
+	path = subs/list
+	url = https://github.com/Soldy/cpp_list.git
+[submodule "subs/ini"]
+	path = subs/ini
+	url = https://github.com/Soldy/cpp_simple_ini.git
+[submodule "subs/config"]
+	path = subs/config
+	url = https://github.com/Soldy/cpp_config.git
