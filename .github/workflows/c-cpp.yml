@@ -1,0 +1,30 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: configure
+      run: sudo apt install -y gcc-10 curl
+    - name: get doctest.h
+      run: curl https://raw.githubusercontent.com/onqtam/doctest/v2.4.9/doctest/doctest.h > doctest.h
+    - name: pwd
+      run: pwd
+    - name: create build dir
+      run: mkdir ../build
+    - run: cd ../build
+    - name: cmake config
+      run: cmake ../screen_saver
+    - name: cmake build
+      run: cmake --build .
+    - name: get version
+      run: g++ -v
