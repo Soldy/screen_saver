@@ -20,10 +20,12 @@
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
-    screen->init();
-    ImagesClass * Images = new ImagesClass();
-    Images->render();
-    screen->rendering();
-    SDL_Delay(cppConfig::getInt("delay"));
+    while(true){
+        Screen->clear();
+        Images->render();
+        Screen->rendering();
+        SDL_Delay(cppConfig::getInt("delay"));
+        Images->next();
+    }
     return 0;
 }

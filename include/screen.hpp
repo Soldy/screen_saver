@@ -1,6 +1,6 @@
 class ScreenClass{
   public:
-    void init(){
+    ScreenClass(){
         cache.result.x=cppConfig::getInt("result_x");
         cache.result.y=cppConfig::getInt("result_y");
         cache.screen_size.x=cppConfig::getInt("result_x");
@@ -10,14 +10,16 @@ class ScreenClass{
         this->createWindow();
         this->createRender();
     };
+    void clear(){
+         this->setBlack();
+         if(this->update_round > this->update_rate){
+              this->update_round = 0;
+              SDL_RenderClear(cache.render);
+         }
+    };
     void rendering(){
-//        this->setBlack();
-//        if(this->update_round > this->update_rate){
-//            this->update_round = 0;
-//            SDL_RenderClear(cache.render);
-//        }
         SDL_RenderPresent(cache.render);
-//       this->update_round++;
+        this->update_round++;
     };
     void close(){
         SDL_DestroyWindow( cache.window );
@@ -53,7 +55,7 @@ class ScreenClass{
             -1,
             SDL_RENDERER_ACCELERATED
         );
-//        this->setBlack();
+        this->setBlack();
         SDL_RenderClear(cache.render);
     };
     void setBlack(){
@@ -66,4 +68,4 @@ class ScreenClass{
         );
     }
 };
-ScreenClass * screen = new ScreenClass();
+ScreenClass * Screen = new ScreenClass();
