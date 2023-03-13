@@ -28,9 +28,9 @@ jobs:
     - run: cd ../build
     - name: sft install
       run: git clone https://github.com/Soldy/sft.git
-      run: cd sft/confs
-      run: sudo cp -r usr/ /
-      run: cd ../..
+    - run: cd sft/confs
+    - run: sudo cp -r usr/ /
+    - run: cd ../..
     - name: cmake config
       run: cmake ../screen_saver
     - name: cmake build
