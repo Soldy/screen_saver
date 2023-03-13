@@ -19,6 +19,8 @@ jobs:
       run: sudo apt upgrade -y
     - name: container extra packets
       run: sudo apt install -y gcc-10 curl libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev libsdl2-ttf-dev
+    - name: update submodules
+      run: git submodule update --init
     - name: get doctest.h
       run: curl https://raw.githubusercontent.com/onqtam/doctest/v2.4.9/doctest/doctest.h > doctest.h
     - name: pwd
