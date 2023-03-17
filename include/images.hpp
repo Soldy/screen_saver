@@ -64,7 +64,7 @@ class ImagesClass{
        return uniform_dist(e1);
     };
     void next(){
-        this->current = this->prev;
+        this->prev = this->current;
         if(cppConfig::getInt("random") == 1){
             while(this->prev == this->current)
                 this->current = this->nextRandom();
