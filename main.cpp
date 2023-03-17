@@ -4,6 +4,7 @@
 #include <thread>
 #include <cmath>
 #include <sstream>
+#include <random>
 #include <SDL2/SDL.h>  
 #include "SDL2/SDL_image.h"
 #include "subs/trim/just_trim.hpp"

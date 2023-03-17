@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <random>
 class ImagesClass{
   private:
     std::vector<std::string> list = simple_list::read("files.lst");
@@ -9,6 +10,7 @@ class ImagesClass{
     SDL_Rect rect;
     Dimension d;
     int current = 0;
+    int prev = -1;
     void init(){
         IMG_Init(IMG_INIT_PNG);
         int index = 0;
@@ -55,8 +57,20 @@ class ImagesClass{
          this->d.size.y = 1080;
          this->init();
     };
+    int nextRandom(){
+       std::random_device r;
+       std::default_random_engine e1(r());
+       std::uniform_int_distribution<int> uniform_dist(0, this->textures.size()-1);
+       return uniform_dist(e1);
+    };
     void next(){
-        this->current++;
+        this->current = this->prev;
+        if(cppConfig::getInt("random") == 1){
+            while(this->prev == this->current)
+                this->current = this->nextRandom();
+        }else{
+            this->current++;
+        }
         if(this->current >= this->textures.size())
             this->current = 0;
     };
