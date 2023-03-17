@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 class ImagesClass{
@@ -14,19 +13,24 @@ class ImagesClass{
         IMG_Init(IMG_INIT_PNG);
         int index = 0;
         for(std::string &v : this->list){
+            debugMsg("image load",v);
             this->surfaces.push_back(IMG_Load(v.c_str()));
             index = this->surfaces.size()-1;
             if (this->surfaces[index] == NULL)
                 std::cout << "Error creating surfce " << v<< std::endl;
         }
         for(auto &v : this->surfaces){
+            index = this->textures.size();
+            debugMsg(
+              "image texture cache",
+              this->list[index]
+            );
             this->textures.push_back(
                 SDL_CreateTextureFromSurface(
                     cache.render, 
                     v
                 )
             );
-            index = this->textures.size()-1;
             if (this->textures[index] == NULL) 
                 std::cout << 
                    "Error creating texture " << 
@@ -53,10 +57,14 @@ class ImagesClass{
     };
     void next(){
         this->current++;
-        if(this->current > this->textures.size())
+        if(this->current >= this->textures.size())
             this->current = 0;
     };
     void render(){
+        debugMsg(
+            "image render",
+            this->list[this->current]
+        );
         SDL_RenderClear(cache.render);
         this->resize();
         SDL_RenderDrawRect(

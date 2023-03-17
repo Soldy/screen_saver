@@ -10,6 +10,7 @@
 #include "subs/list/list.hpp"
 #include "subs/ini/simple_ini.hpp"
 #include "subs/config/config.hpp"
+#include "include/debug.hpp"
 #include "include/dimension.hpp"
 #include "include/cache.hpp"
 #include "include/config.hpp"
