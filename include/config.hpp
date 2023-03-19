@@ -1,8 +1,7 @@
 class ConfigClass{
   public:
     ConfigClass(){
-        for(auto const & [k, v] : simple_ini_tool::read("config.ini"))
-            cppConfig::set(k, v);
+        cppConfig::map(simple_ini_tool::read("config.ini"));
     };
 };
 ConfigClass * config = new ConfigClass();
