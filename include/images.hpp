@@ -1,9 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <string>
+#include <iostream>
+#include <filesystem>
+namespace fs = std::filesystem;
+
 class ImagesClass{
   private:
-    std::vector<std::string> list = simple_list::read("files.lst");
+    std::vector<std::string> list;
     std::vector<std::string> imgs;
     std::vector<SDL_Texture *> textures;
     std::vector<SDL_Surface *> surfaces;
@@ -11,21 +16,26 @@ class ImagesClass{
     Dimension d;
     int current = 0;
     int prev = -1;
+    int load = 0;
     void init(){
+        this->initFileList();
         IMG_Init(IMG_INIT_PNG);
         int index = 0;
         for(std::string &v : this->list){
             debugMsg("image load",v);
             this->surfaces.push_back(IMG_Load(v.c_str()));
-            index = this->surfaces.size()-1;
-            if (this->surfaces[index] == NULL)
-                std::cout << "Error creating surfce " << v<< std::endl;
+            this->load = this->surfaces.size()-1;
+            if (this->surfaces[this->load] == NULL)
+                debugMsg(
+                  "Error creating surfce ",
+                  v
+                );
         }
         for(auto &v : this->surfaces){
-            index = this->textures.size();
+            this->load = this->textures.size();
             debugMsg(
               "image texture cache",
-              this->list[index]
+              this->list[this->load]
             );
             this->textures.push_back(
                 SDL_CreateTextureFromSurface(
@@ -33,13 +43,12 @@ class ImagesClass{
                     v
                 )
             );
-            if (this->textures[index] == NULL) 
-                std::cout << 
-                   "Error creating texture " << 
-                   this->list[index] << 
-                   " - " << 
-                   SDL_GetError() <<
-                   std::endl;
+            if (this->textures[this->load] == NULL) 
+                debugMsg(
+                  "Error creating texture",
+                  this->list[this->load],
+                   SDL_GetError()
+                );
             SDL_FreeSurface(v);
         }
     };
@@ -48,6 +57,17 @@ class ImagesClass{
         this->rect.w = result.x(this->d.size.x);
         this->rect.y = result.y(this->d.position.y);
         this->rect.h = result.y(this->d.size.y);
+    };
+    void dirRead(){
+        std::string path = cppConfig::get("image_dir");
+        for (const auto & entry : std::filesystem::directory_iterator(path))
+             this->list.push_back(entry.path());
+    };
+    void initFileList(){
+        if(cppConfig::getInt("file_lst_enable") == 1)
+            this->list = simple_list::read("files.lst");
+        if(cppConfig::getInt("image_dir_enable") == 1)
+            this->dirRead();
     };
   public:
     ImagesClass(){
