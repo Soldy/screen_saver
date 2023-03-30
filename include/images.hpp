@@ -20,7 +20,6 @@ class ImagesClass{
     void init(){
         this->initFileList();
         IMG_Init(IMG_INIT_PNG);
-        int index = 0;
         for(std::string &v : this->list){
             debugMsg("image load",v);
             this->surfaces.push_back(IMG_Load(v.c_str()));
@@ -32,7 +31,7 @@ class ImagesClass{
                 );
         }
         for(auto &v : this->surfaces){
-            this->load = this->textures.size();
+            this->load = static_cast<int>(this->textures.size());
             debugMsg(
               "image texture cache",
               this->list[this->load]
