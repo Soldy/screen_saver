@@ -21,18 +21,18 @@ class ImagesClass{
         this->initFileList();
         IMG_Init(IMG_INIT_PNG);
         for(std::string &v : this->list){
-            debugMsg("image load",v);
+            cpp_verbose::msg("image load",v);
             this->surfaces.push_back(IMG_Load(v.c_str()));
             this->load = this->surfaces.size()-1;
             if (this->surfaces[this->load] == NULL)
-                debugMsg(
+                cpp_verbose::msg(
                   "Error creating surfce ",
                   v
                 );
         }
         for(auto &v : this->surfaces){
             this->load = static_cast<int>(this->textures.size());
-            debugMsg(
+            cpp_verbose::msg(
               "image texture cache",
               this->list[this->load]
             );
@@ -43,10 +43,10 @@ class ImagesClass{
                 )
             );
             if (this->textures[this->load] == NULL) 
-                debugMsg(
+                cpp_verbose::msg(
                   "Error creating texture",
                   this->list[this->load],
-                   SDL_GetError()
+                  SDL_GetError()
                 );
             SDL_FreeSurface(v);
         }
@@ -94,7 +94,7 @@ class ImagesClass{
             this->current = 0;
     };
     void render(){
-        debugMsg(
+        cpp_verbose::msg(
             "image render",
             this->list[this->current]
         );
