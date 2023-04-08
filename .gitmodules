@@ -10,6 +10,6 @@
 [submodule "subs/config"]
 	path = subs/config
 	url = https://github.com/Soldy/cpp_config.git
-[submodule "sub/verbose"]
-	path = sub/verbose
+[submodule "subs/verbose"]
+	path = subs/verbose
 	url = https://github.com/Soldy/cpp_verbose.git
