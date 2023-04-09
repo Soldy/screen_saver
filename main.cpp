@@ -7,6 +7,7 @@
 #include <random>
 #include <SDL2/SDL.h>  
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
 #include "subs/trim/just_trim.hpp"
 #include "subs/list/list.hpp"
 #include "subs/ini/simple_ini.hpp"
@@ -18,6 +19,7 @@
 #include "include/result.hpp"
 #include "include/screen.hpp"
 #include "include/images.hpp"
+#include "include/time.hpp"
 
 
 int main(int argc, char* argv[]) {
@@ -25,6 +27,7 @@ int main(int argc, char* argv[]) {
     while(true){
         Screen->clear();
         Images->render();
+        Time->render();
         Screen->rendering();
         SDL_Delay(cppConfig::getInt("delay"));
         Images->next();
