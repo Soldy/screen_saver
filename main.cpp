@@ -15,7 +15,7 @@
 #include "include/dimension.hpp"
 #include "include/cache.hpp"
 #include "include/config.hpp"
-#include "sub/verbose/verbose.hpp"
+#include "subs/verbose/verbose.hpp"
 #include "include/result.hpp"
 #include "include/screen.hpp"
 #include "include/images.hpp"
