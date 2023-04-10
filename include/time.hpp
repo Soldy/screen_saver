@@ -20,20 +20,53 @@ class TimeClass{
     };
   public:
     TimeClass(){
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+          "font","init"
+        ); 
+        #endif
         TTF_Init();
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+          "ttf init","done"
+        );
+        #endif
+        this->d.size.x = 480;
         this->d.size.y = 96;
         this->d.position.x = 40;
+        this->d.position.y = 944;
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+          "config font details",cppConfig::get("clock_font_size")
+        );
+        #endif
         if(cppConfig::getInt("clock_font_size") != 0)
-            this->d.size.y = cppConfig::getInt("time_font_size");
+            this->d.size.y = cppConfig::getInt("clock_font_size");
         if(cppConfig::get("clock_font") != "")
-            this->font = cppConfig::getInt("clock_font");
-        this->Computerfont = TTF_OpenFont(this->font.c_str(), this->d.size.y);
-        this->d.position.y = 1080 - this->d.position.x - this->d.size.y;
-        this->d.size.x = this->d.size.y*5;
+            this->font = cppConfig::get("clock_font");
         if(cppConfig::get("clock_color") != "")
             this->color = this->hexToSdl(cppConfig::get("clock_color"));
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+          "config font details check","done"
+        );
+        #endif
+        this->Computerfont = TTF_OpenFont(this->font.c_str(), this->d.size.y);
+        this->d.position.y = 1080 - this->d.position.x - this->d.size.y;
+        this->d.size.x = this->d.size.y*3;
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+          "font","initilized"
+        );
+        #endif
+
     };
     void resize(){
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+          "font","resize"
+        );
+        #endif
         this->rect.x = result.x(this->d.position.x);
         this->rect.w = result.x(this->d.size.x);
         this->rect.y = result.y(this->d.position.y);
@@ -73,5 +106,6 @@ class TimeClass{
             &this->rect
         );
     };
+
 };
 TimeClass * Time = new TimeClass();

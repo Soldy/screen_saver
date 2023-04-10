@@ -24,6 +24,12 @@
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
+    #ifdef __DEBUG_
+    cpp_verbose::msg(
+      "starting loop ",
+      ""
+    );
+    #endif
     while(true){
         Screen->clear();
         Images->render();

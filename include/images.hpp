@@ -52,6 +52,12 @@ class ImagesClass{
         }
     };
     void resize(){
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+            "rect resize",
+            this->list[this->current]
+        );
+        #endif
         this->rect.x = result.x(this->d.position.x);
         this->rect.w = result.x(this->d.size.x);
         this->rect.y = result.y(this->d.position.y);
@@ -98,11 +104,24 @@ class ImagesClass{
             "image render",
             this->list[this->current]
         );
+        this->rect.x = result.x(this->d.position.x);
         this->resize();
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+            "image draw",
+            this->list[this->current]
+        );
+        #endif
         SDL_RenderDrawRect(
             cache.render,
             & this->rect
         );
+        #ifdef __DEBUG_
+        cpp_verbose::msg(
+            "image render copy",
+            this->list[this->current]
+        );
+        #endif
         SDL_RenderCopy(
             cache.render,
             this->textures[this->current],
