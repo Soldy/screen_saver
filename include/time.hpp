@@ -23,7 +23,7 @@ class TimeClass{
         TTF_Init();
         this->d.size.y = 96;
         this->d.position.x = 40;
-        if(cppConfig::get("clock_font_size") != "")
+        if(cppConfig::getInt("clock_font_size") != 0)
             this->d.size.y = cppConfig::getInt("time_font_size");
         if(cppConfig::get("clock_font") != "")
             this->font = cppConfig::getInt("clock_font");
@@ -73,6 +73,5 @@ class TimeClass{
             &this->rect
         );
     };
-
 };
 TimeClass * Time = new TimeClass();

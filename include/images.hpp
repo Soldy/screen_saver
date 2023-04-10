@@ -98,7 +98,6 @@ class ImagesClass{
             "image render",
             this->list[this->current]
         );
-        SDL_RenderClear(cache.render);
         this->resize();
         SDL_RenderDrawRect(
             cache.render,
